@@ -118,8 +118,32 @@ public class Game
             case QUIT:
                 wantToQuit = quit(command);
                 break;
+                
+            case LOOK:
+                lookAround(command);
+                break;
         }
         return wantToQuit;
+    }
+    
+    /**
+     * Prints out the description of your room.
+     */
+    private void lookAround(Command command)
+    {
+        if(!command.hasSecondWord()) {  
+            //if we don't have a second word, then we look at the room
+            System.out.println("You look around the room");
+            System.out.println(currentRoom.getLongDescription());
+        }else{
+            //if we do, we look at the item, if it's there
+            if(currentRoom.hasItem(command.getSecondWord())){
+                System.out.println(currentRoom.getItemDescription(command.getSecondWord()));
+            }else{
+                //the item is not there
+                System.out.println("Look at what?");
+            }
+        }
     }
 
     // implementations of user commands:

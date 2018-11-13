@@ -1,5 +1,6 @@
 import java.util.Set;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -20,6 +21,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
+    private HashMap<String, Item> inventory;
 
     /**
      * Create a room described "description". Initially, it has
@@ -31,6 +33,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+        inventory = new HashMap<String, Item>();
     }
 
     /**
@@ -76,6 +79,34 @@ public class Room
             returnString += " " + exit;
         }
         return returnString;
+    }
+    
+    private String getInventoryString()
+    {
+        String returnString = "";
+        if(!inventory.isEmpty()){
+            returnString = "Items in room:";
+            Set<String> items = inventory.keySet();
+            for(String thing : items) {
+                returnString += " " + thing;
+            }
+        }
+        return returnString;
+    }
+    
+    public boolean hasItem(String query)
+    {
+        return inventory.containsKey(query);
+    }
+    
+    public String getItemDescription(String query)
+    {
+        return inventory.get(query).getDescription();
+    }
+    
+    public Item removeItem(String query)
+    {
+        return inventory.remove(query);
     }
 
     /**
